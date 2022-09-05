@@ -1,28 +1,16 @@
-<script context="module">
-	/**
-	 * @type {import('@sveltejs/kit').Load}
-	 */
-	export async function load({ fetch }) {
-		// Use a `limit` querystring parameter to fetch a limited number of posts
-		// e.g. fetch('posts.json?limit=5') for 5 most recent posts
-		const posts = await fetch('/posts.json').then((res) => res.json());
-
-		return {
-			props: {
-				posts
-			}
-		};
-	}
-</script>
-
 <script>
+	// throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	import PageHead from '$lib/components/PageHead.svelte';
 	import Article from '$lib/components/Article.svelte';
 	import ArticleTitle from '$lib/components/ArticleTitle.svelte';
 	import ArticleMeta from '$lib/components/ArticleMeta.svelte';
 	import ArticleDescription from '$lib/components/ArticleDescription.svelte';
 
-	export let posts;
+	/** @type {import('./$types').PageData} */
+	export let data;
+	export let posts = data.posts;
+	console.log('data',{data});
 </script>
 
 <PageHead title="Home" description="An awesome blog about development with Svelte" />

@@ -1,16 +1,19 @@
+// throw new Error("@migration task: Update +server.js (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292701)");
+
+
+// @migration task: Check imports
+import { error } from '@sveltejs/kit';
 import { slugFromPath } from '$lib/util';
 
-/** @type {import('@sveltejs/kit').RequestHandler} */
-export async function get({ url }) {
-	const modules = import.meta.glob('./*.{md,svx,svelte.md}');
+/** @type {import('./$types').RequestHandler} */
+export async function GET({ url }) {
+	const modules = import.meta.glob('./../posts/**/*.{md,svx,svelte.md}');
 
 	const postPromises = [];
 	const limit = Number(url.searchParams.get('limit') ?? Infinity);
 
 	if (Number.isNaN(limit)) {
-		return {
-			status: 400
-		};
+		throw error(400, 'invalid limit');
 	}
 
 	for (let [path, resolver] of Object.entries(modules)) {
@@ -28,7 +31,5 @@ export async function get({ url }) {
 
 	publishedPosts.sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1));
 
-	return {
-		body: publishedPosts.slice(0, limit)
-	};
+	return new Response(JSON.stringify(publishedPosts.slice(0, limit)));
 }
