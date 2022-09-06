@@ -1,6 +1,4 @@
 <script>
-	// throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
 	import PageHead from '$lib/components/PageHead.svelte';
 	import Article from '$lib/components/Article.svelte';
 	import ArticleTitle from '$lib/components/ArticleTitle.svelte';
