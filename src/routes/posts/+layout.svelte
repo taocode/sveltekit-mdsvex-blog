@@ -5,9 +5,10 @@
 	import ArticleTitle from '$lib/components/ArticleTitle.svelte';
 	import ArticleMeta from '$lib/components/ArticleMeta.svelte';
 
+	export const prerender = true;
+	
 	export let data;
 	export let post = data.post;
-	console.log('posts/+layout.svelte',{data})
 </script>
 
 <PageHead title={post.title} description={post.description} />

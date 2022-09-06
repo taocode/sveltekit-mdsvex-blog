@@ -1,12 +1,11 @@
-throw new Error("@migration task: Update +server.js (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292701)");
-
+import { error } from '@sveltejs/kit';
 import { slugFromPath } from '$lib/util';
 
-/**
- * @type {import('@sveltejs/kit').RequestHandler}
- */
-export async function get({ params }) {
-	const modules = import.meta.glob(`./*.{md,svx,svelte.md}`);
+export const prerender = true;
+
+/** @type {import('./$types').RequestHandler} */
+export async function GET({ params }) {
+	const modules = import.meta.glob(`../**/*.{md,svx,svelte.md}`);
 
 	let match;
 	for (const [path, resolver] of Object.entries(modules)) {
@@ -17,14 +16,12 @@ export async function get({ params }) {
 	}
 
 	if (!match) {
-		return {
-			status: 404
-		};
+		throw error(404);
 	}
 
 	const post = await match[1]();
 
-	return {
-		body: post.metadata
-	};
+	return new Response(JSON.stringify(
+		post.metadata
+	));
 }

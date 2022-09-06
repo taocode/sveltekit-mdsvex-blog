@@ -1,1 +1,4 @@
-export const slugFromPath = (path) => path.match(/([\w-]+)\.(svelte\.md|md|svx)/i)?.[1] ?? null;
+export const slugFromPath = (path) => {
+	const pathParts = path.split('/')
+	return pathParts[pathParts.length-2] ?? null;
+}

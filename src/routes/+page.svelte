@@ -10,7 +10,6 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 	export let posts = data.posts;
-	console.log('data',{data});
 </script>
 
 <PageHead title="Home" description="An awesome blog about development with Svelte" />
